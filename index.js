@@ -1,10 +1,9 @@
 import jsonfile from "jsonfile";
 import moment from "moment";
 import simpleGit from "simple-git";
+import { randomandom } from "random";
 
 const path ="./data.json"
-
-
 
 const markComits = (n) => {
     const x = random.default.int(0,54);
