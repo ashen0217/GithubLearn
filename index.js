@@ -1,24 +1,40 @@
 import jsonfile from "jsonfile";
 import moment from "moment";
 import simpleGit from "simple-git";
-import { randomandom } from "random";
+import { Random } from "random";
 
-const path ="./data.json"
+const path = "./data.json";
+const random = new Random();
 
-const markComits = (n) => {
-    const x = random.default.int(0,54);
-    const y = random.default.int(0,6);
-    const date = moment().subtract(1,"y").add(1,"d").add(x,"w").add(y,"d").format();
+const markComits = async (n) => {
+    if (n === 0) {
+        try {
+            await simpleGit().push();
+            return;
+        } catch (error) {
+            console.error("Error pushing to Git:", error);
+            return;
+        }
+    }
+
+    const x = random.int(0, 54);
+    const y = random.int(0, 6);
+    const date = moment().subtract(1, "y").add(1, "d").add(x, "w").add(y, "d").format("YYYY-MM-DD HH:mm:ss");
 
     const data = {
         date: date,
     };
 
-    jsonfile.writeFile(path, data,()=>{
-        simpleGit().add([path]).commit(date,{'--date':date}).push();
+    console.log(date);
 
-
-    });
+    try {
+        await jsonfile.writeFile(path, data);
+        await simpleGit().add([path]).commit(`Commit on ${date}`, { "--date": date });
+        await simpleGit().push();
+        markComits(n - 1);
+    } catch (error) {
+        console.error("Error during commit:", error);
+    }
 };
 
-
+markComits(100);
