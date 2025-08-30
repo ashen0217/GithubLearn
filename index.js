@@ -37,4 +37,4 @@ const markComits = async (n) => {
     }
 };
 
-markComits(200);
+markComits(1000);
