@@ -1,4 +1,8 @@
-import jsonfile from "jsonfile";
+
+
+// Add your instrumentation key or use the APPLICATIONINSIGHTSKEY environment variable on your production machine to start collecting data.
+var ai = require('applicationinsights');
+ai.setup(process.env.APPLICATIONINSIGHTSKEY || 'your_instrumentation_key').start();import jsonfile from "jsonfile";
 import moment from "moment";
 import simpleGit from "simple-git";
 import { Random } from "random";
@@ -37,4 +41,4 @@ const markComits = async (n) => {
     }
 };
 
-markComits(1000);
+markComits(50);
